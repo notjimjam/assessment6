@@ -24,9 +24,10 @@ test('Title shows up when page loads', async () => {
 test("See all bots button shows all the bots", async () => {
     await driver.findElement(By.id("see-all")).click()
 
-    const bots  = await driver.findElement(By.id("all-bots"))
+    const bots  = await driver.findElement(By.id("see-all") && By.className("bot-card outline"))
 
-    const displayed = bots.isDisplayed()
+
+    const displayed = await bots.isDisplayed()
 
     expect(displayed).toBeTruthy
 
