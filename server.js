@@ -1,14 +1,31 @@
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
+
 const app = express()
 const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
+const Rollbar = require('rollbar')
 
 app.use(express.json())
+app.use(cors())
+
+//rollbar stuff
+
+//generic rollbar message
+// rollbar.log('Hello world!')
+
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+})
+
+app.get("/js", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/index.js"))
+})
 
 app.get('/api/robots', (req, res) => {
     try {
-        res.status(200).send(botsArr)
+        res.status(200).send(bots)
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
         res.sendStatus(400)
